@@ -545,10 +545,10 @@ export function redact(text: string): { text: string; redacted: boolean } {
       "$1 [REDACTED]",
     )
     .replace(
-      /(?<![\w-])(--?(?:token|password|passwd|api-?key|secret|access-?key))([= ])\S{8,}/gi,
+      /(?<![\w-])(--?(?:(?!max)[a-z0-9]+-)*(?:token|password|passwd|api-?key|secret|access-?key))([= ])(?!-)\S{8,}/gi,
       "$1$2[REDACTED]",
     )
-    .replace(/(:\/\/[^/\s:@]+):[^/\s@]+@/g, "$1:[REDACTED]@")
+    .replace(/(:\/\/[^/\s:@]*):[^/\s?#@]+@/g, "$1:[REDACTED]@")
     // Any-case keys, but `max_tokens: 4000`-style limits and counters are not secrets.
     .replace(
       /\b([A-Za-z_]*(?:api[_-]?key|access[_-]?key|secret|token|passw(?:or)?d|cookie|authorization|private[_-]?key)["']?\s*[=:]\s*["']?)([^\s"',}]+)/gi,

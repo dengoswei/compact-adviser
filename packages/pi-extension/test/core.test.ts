@@ -169,10 +169,17 @@ test("redact covers any-case config keys, JWT/AWS/Slack tokens, Basic auth, CLI 
     ["Authorization: Basic dXNlcjpwYXNzd29yZA==", "Authorization: Basic [REDACTED]"],
     ["tool login --token fixtureValue123 --verbose", "tool login --token [REDACTED] --verbose"],
     ["tool login --password=fixtureValue123", "tool login --password=[REDACTED]"],
+    ["tool --client-secret fixtureValue123", "tool --client-secret [REDACTED]"],
+    ["tool --access-token fixtureValue123 --json", "tool --access-token [REDACTED] --json"],
     [
       "clone https://user:fixturePass1@git.example.test/r.git",
       "clone https://user:[REDACTED]@git.example.test/r.git",
     ],
+    [
+      "redis://:fixturePass1@cache.example.test:6379",
+      "redis://:[REDACTED]@cache.example.test:6379",
+    ],
+    ["amqp://:fixturePass1@mq.example.test/vh", "amqp://:[REDACTED]@mq.example.test/vh"],
   ];
   for (const [input, expected] of cases) {
     assert.deepEqual(redact(input), { text: expected, redacted: true }, input);
@@ -188,7 +195,12 @@ test("redact leaves limits, counters, short values and prose alone", () => {
     "password: short",
     "Basic password handling is documented below.",
     "tool --password-file creds.txt",
+    "tool --max-tokens 4000",
+    "tool --max-token 40000000",
+    "tool --password --verbose-flag",
     "http://example.test:8080/path@v2",
+    "http://example.test:8080?next=a@b",
+    "http://example.test:8080#frag=a@b",
     "eyJ is a common JSON-in-base64 prefix",
   ]) {
     assert.deepEqual(redact(input), { text: input, redacted: false }, input);

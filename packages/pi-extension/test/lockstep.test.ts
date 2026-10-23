@@ -351,7 +351,11 @@ test("every package scrubs owned settings fields and known key values the same w
     ["xoxb", "000000000000", "fixturefixture"].join("-"),
     "Authorization: Basic dXNlcjpwYXNzd29yZA==",
     "tool --token fixtureValue123",
+    "tool --client-secret fixtureValue123",
+    "tool --password --verbose-flag",
     "https://user:fixturePass1@git.example.test/r.git",
+    "redis://:fixturePass1@cache.example.test:6379",
+    "http://example.test:8080?next=a@b",
   ].join("\n");
   for (const other of [claudeSnapshot, codexSnapshot, grokSnapshot]) {
     assert.deepEqual(other.redact(dump), piContext.redact(dump));
