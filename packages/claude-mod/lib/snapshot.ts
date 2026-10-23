@@ -535,7 +535,7 @@ export function redact(text: string): { text: string; redacted: boolean } {
     .replace(/(:\/\/[^/\s:@]*):[^/\s?#@]+@/g, "$1:[REDACTED]@")
     // Any-case keys, but `max_tokens: 4000`-style limits and counters are not secrets.
     .replace(
-      /\b([A-Za-z_]*(?:api[_-]?key|access[_-]?key|secret|token|passw(?:or)?d|cookie|authorization|private[_-]?key)["']?\s*[=:]\s*["']?)([^\s"',}]+)/gi,
+      /\b([A-Za-z_]*(?:api[_-]?key|access[_-]?key|secret(?:[_-]?key)?|token|passw(?:or)?d|cookie|authorization|private[_-]?key)["']?\s*[=:]\s*["']?)([^\s"',}]+)/gi,
       (match, head: string, value: string) =>
         /max/i.test(head) || value.length < 8 || !/[a-z]/i.test(value)
           ? match

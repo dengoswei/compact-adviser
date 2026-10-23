@@ -161,6 +161,8 @@ test("redact covers any-case config keys, JWT/AWS/Slack tokens, Basic auth, CLI 
     ["api_key: fixtureValue123", "api_key: [REDACTED]"],
     ['{"password": "fixtureValue123"}', '{"password": "[REDACTED]"}'],
     ["db.secret=fixtureValue123", "db.secret=[REDACTED]"],
+    ["secret_key: fixtureValue123", "secret_key: [REDACTED]"],
+    ["SECRET_KEY = 'fixture-insecure-abcdefgh'", "SECRET_KEY = '[REDACTED]'"],
     ["accessKey: fixtureValue123", "accessKey: [REDACTED]"],
     ["Cookie: session=fixtureValue123", "Cookie: [REDACTED]"],
     [`id ${fakeJwt} end`, "id [REDACTED] end"],

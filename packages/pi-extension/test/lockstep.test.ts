@@ -345,6 +345,7 @@ test("every package scrubs owned settings fields and known key values the same w
   const generic = [
     "api_key: fixtureValue123",
     '{"password": "fixtureValue123"}',
+    "SECRET_KEY = 'fixture-insecure-abcdefgh'",
     "max_tokens: 4000 prompt_tokens: 1234",
     ["eyJhbGciOiJIUzI1NiJ9", "eyJzdWIiOiJmaXh0dXJlIn0", "c2lnbmF0dXJlZml4dHVyZQ"].join("."),
     "AKIAIOSFODNN7EXAMPLE",
